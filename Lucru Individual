@@ -1,0 +1,709 @@
+install.packages("dplyr")
+library(dplyr)
+library(readr)
+library(tidyr)
+install.packages("readxl")
+library(readxl)
+
+setwd("C:/Users/Lenovo/Desktop/FCIM-LABORATOARE/AD")
+file_path <- "StudentsPerfomance.xlsx"
+data<-read_excel(file_path)
+View(data)
+glimpse(data)
+colnames(data)
+
+
+
+head(data)
+
+
+levels(data$gender)
+
+
+levels(data$lunch)
+
+
+library(tidyverse)
+
+
+data("evals", package = "openintro")
+
+
+glimpse(evals)
+
+library(openintro)
+
+data("evals")
+
+summary(evals)
+summary(data)
+library(dplyr)
+
+
+evals <- evals %>%
+  mutate(
+    cls_type = case_when(
+      cls_students <= 18 ~ "small",
+      cls_students <= 59 ~ "midsize",
+      TRUE ~ "large"
+    )
+  )
+
+
+contingency_table <- data %>%
+  count(gender, lunch) %>%
+  pivot_wider(names_from = gender, values_from = n)
+
+print(contingency_table)
+
+data_filtered <- data %>%
+  filter(lunch != 'level_to_be_filtered')
+
+data_filtered$lunch <- factor(data_filtered$lunch)
+data_filtered$lunch <- droplevels(data_filtered$lunch)
+
+
+install.packages("ggplot2")
+library(ggplot2)
+ggplot(data, aes(x = gender)) + geom_bar()
+
+library(openintro)
+
+
+# Afișați ultimele rânduri ale setului de date
+tail(data)
+
+
+# Afișați informații despre noul set de date
+glimpse(data)
+str(data)
+# Încărcați pachetele necesare
+install.packages("tidyverse")
+library(tidyverse)
+
+
+
+# Filtrare pentru studenții cu scoruri "big" (sau oricare alt criteriu doriți)
+data_big <- data %>% filter(`math score` >= 90)
+
+glimpse(data_big)
+
+
+
+# Using dplyr
+library(dplyr)
+
+med_dplyr <- data %>% pull(`writing score`) %>% median()
+
+# Using base R
+med_baseR <- median(data$`writing score`)
+
+# Displaying column names and median values
+cat("Column Names: ", colnames(data), "\n")
+cat("Median using dplyr: ", med_dplyr, "\n")
+cat("Median using base R: ", med_baseR, "\n")
+
+
+# Adăugarea unei coloane "num_char_cat" în funcție de mediană
+data_updated <- data %>%
+  mutate(num_char_cat = if_else(`writing score` >= med, "at or above median", "below median"))
+
+# Analiza categoriilor
+data_updated %>%
+  count(num_char_cat)
+
+# Calculul medianei pentru coloana "math.score"
+# Using backticks
+med_math <- median(data$`math score`)
+
+# Using double quotes
+med_math <- median(data$"math score")
+
+
+# Adăugarea unei coloane "math_score_cat" în funcție de mediană
+colnames(data)
+any(is.na(data$`math score`))
+med <- median(data$`math score`)
+print(med)
+
+data_updated <- data %>%
+  mutate(math_score_cat = if_else(`math score` >= med, "at or above median", "below median"))
+
+
+# Analiza categoriilor
+data_updated %>%
+  count(math_score_cat)
+# Check the structure of data_updated
+str(data_updated)
+
+# Create the table only if the column exists
+if ("math_score_cat" %in% colnames(data_updated)) {
+  table(data_updated$math_score_cat)
+} else {
+  print("math_score_cat column does not exist.")
+}
+
+# Verifică și afișează sumarul pentru coloana "math_score_cat"
+summary(data_updated$math_score_cat)
+
+# Creează un grafic cu bare folosind ggplot2
+library(ggplot2)
+
+ggplot(data = data_updated, aes(x = `writing score`)) +
+  geom_bar()
+
+
+# Crearea unui grafic folosind ggplot2
+
+library(ggplot2)
+
+
+# Verifică dacă numele coloanei "num_char" există în setul de date original
+"num_char" %in% colnames(data)
+
+# Verifică numele coloanelor în setul de date original
+colnames(data)
+
+# Calculează mediana pentru coloana "math score" (sau înlocuiește cu numele corect al coloanei)
+med <- median(data$`math score`)
+
+# Adaugă coloana "num_char_cat" în funcție de mediană
+data_updated <- data %>%
+  mutate(num_char_cat = if_else(`math score` >= med, "at or above median", "below median"))
+
+
+# Afișează primele câteva rânduri ale setului de date actualizat
+head(data_updated)
+
+# Verifică valorile unice din coloana "num_char_cat"
+unique(data_updated$num_char_cat)
+
+# Creează tabela de sumar pentru coloana "num_char_cat"
+summary_table <- table(data_updated$num_char_cat)
+summary_table
+
+
+# Numărarea observațiilor în fiecare categorie a coloanei "num_char_cat"
+summary_table <- table(data_updated$num_char_cat)
+print(summary_table)
+
+
+# Calculul medianei pentru coloana "writing.score" sau oricare altă coloană doriți
+med <- median(data$`writing score`)
+
+data_updated <- data %>%
+  mutate(writing_score_cat = if_else(`writing score` >= med, "at or above median", "below median"))
+
+# Analiza categoriilor
+# Verifică numele coloanelor în setul de date original
+colnames(data)
+
+# Calculează mediana pentru coloana "math score"
+med <- median(data$`math score`)
+
+# Adaugă coloana "num_char_cat" în funcție de mediană
+data_updated <- data %>%
+  mutate(num_char_cat = if_else(`math score` >= med, "at or above median", "below median"))
+
+# Afișează primele câteva rânduri ale setului de date actualizat
+head(data_updated)
+
+# Verifică dacă coloana "num_char_cat" există în setul de date actualizat
+"num_char_cat" %in% colnames(data_updated)
+
+i# Verifică valorile unice din coloana "num_char_cat"
+unique(data_updated$num_char_cat)
+
+# Creează tabela de sumar pentru coloana "num_char_cat"
+summary_table <- table(data_updated$num_char_cat)
+summary_table
+
+
+ggplot(data_updated, aes(x = `test preparation course`, y = `writing score`)) +
+  geom_boxplot() +
+  labs(x = "Test Preparation Course", y = "Writing Score")
+
+# Afișează numele coloanelor din setul de date actualizat
+colnames(data_updated)
+
+# Ajustează comanda de subsetare pentru a se potrivi cu numele reale ale coloanelor
+correlation_matrix <- cor(data_updated[, c("math score", "reading score", "writing score")])
+
+
+
+
+correlation_df <- as.data.frame(correlation_matrix)
+rownames(correlation_df) <- colnames(correlation_matrix)
+colnames(correlation_df) <- colnames(correlation_matrix)
+
+library(ggplot2)
+names(correlation_df)
+str(correlation_df)
+colnames(correlation_df)
+
+ggplot(data = correlation_df) +
+  geom_tile(aes(x = `math score`, y = `reading score`, fill = `writing score`)) +
+  scale_fill_gradient2(low = "blue", high = "red") +
+  labs(x = "Score Variables", y = "Score Variables", fill = "Correlation")
+
+colnames(data_updated)
+
+# Exemplu pentru crearea coloanelor noi
+# Exemplu de creare a coloanei 'existing_column' și atribuirea unei valori constante
+data_updated$existing_column <- 0  # Poți utiliza orice valoare aici
+# Sau orice valoare inițială
+# Exemplu de creare a coloanei 'col2' și atribuirea unei valori constante
+data_updated$col2 <- 1  # Poți utiliza orice valoare aici
+# Sau orice valoare inițială
+# Exemplu pentru a umple coloana 'col1'
+data_updated$col1 <- as.numeric(data_updated$existing_column)
+# Atribuie valori din 'col2' în 'existing_column_2'
+data_updated$existing_column_2 <- as.numeric(data_updated$col2)
+
+# Repetați pentru toate coloanele care nu sunt numerice
+
+
+# Instalați și încărcați pachetele necesare
+install.packages("reshape2")
+library(reshape2)
+library(dplyr)
+
+# Assuming 'data' is your dataset
+numeric_data_updated <- data %>%
+  select_if(is.numeric)
+
+# Elimină variabilele cu deviația standard zero
+numeric_data_updated <- numeric_data_updated[, sapply(numeric_data_updated, sd) != 0]
+
+# Recalculează matricea de corelație
+correlation_matrix <- cor(numeric_data_updated)
+
+# Afișează matricea de corelație
+print(correlation_matrix)
+
+
+
+# Transformați matricea de corelație într-un format lung (long format)
+correlation_data <- melt(correlation_matrix)
+
+# Afișați primele câteva rânduri ale datelor transformate
+head(correlation_data)
+
+
+# Instalați pachetul reshape2 dacă nu l-ați făcut deja
+install.packages("reshape2")
+
+# Încărcați pachetul reshape2
+library(reshape2)
+
+# Transformați matricea de corelație într-un format lung (long format)
+correlation_data <- melt(correlation_matrix)
+library(ggplot2)
+# Creați graficul de tip hartă de căldură
+ggplot(data = correlation_data, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red") +
+  labs(x = "Score Variables", y = "Score Variables", fill = "Correlation")
+# Verifica numele coloanelor
+colnames(data_updated)
+
+# Sau folosește
+names(data_updated)
+
+ggplot(data_updated, aes(x = `race/ethnicity`, y = `writing score`)) +
+  geom_boxplot() +
+  labs(x = "Race/Ethnicity", y = "Writing Score")
+
+ggplot(data_updated, aes(x = `parental level of education`, y = `writing score`)) +
+  geom_boxplot() +
+  labs(x = "Parental Education Level", y = "Writing Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+ggplot(data_updated, aes(x = `test preparation course`, y = `writing score`, fill = `race/ethnicity`)) +
+  geom_boxplot() +
+  labs(x = "Test Preparation Course", y = "Writing Score", fill = "Race/Ethnicity") +
+  scale_fill_brewer(palette = "Set1")
+
+ggplot(data_updated, aes(x = `parental level of education`, y = `writing score`, fill = `race/ethnicity`)) +
+  geom_boxplot() +
+  labs(x = "Parental Education Level", y = "Writing Score", fill = "Race/Ethnicity") +
+  scale_fill_brewer(palette = "Paired") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(data_updated, aes(x = gender, y = `reading score`, fill = `race/ethnicity`)) +
+  geom_boxplot() +
+  labs(x = "Gender", y = "Reading Score", fill = "Race/Ethnicity") +
+  scale_fill_brewer(palette = "Set2")
+
+
+
+# Instalează pachetul dplyr (dacă nu este deja instalat)
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  install.packages("dplyr")
+}
+
+# Încarcă pachetul dplyr
+library(dplyr)
+names(data)
+data %>%
+  group_by(gender) %>%
+  summarize(mean_math_score = mean(`math score`), mean_reading_score = mean(`reading score`))
+
+
+# Grafic de bare pentru scorurile matematice în funcție de gen
+
+
+data %>%
+  group_by(`race/ethnicity`, `test preparation course`) %>%
+  summarize(mean_math_score = mean(`math score`), mean_reading_score = mean(`reading score`)) %>%
+  ggplot(aes(x = `race/ethnicity`, y = mean_math_score, fill = `test preparation course`)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Etnie", y = "Medie scor matematic") +
+  theme_minimal()
+names(data)
+data %>%
+  ggplot(aes(x = `parental level of education`, y = `math score`)) +
+  geom_boxplot() +
+  labs(x = "Nivel de educație al părinților", y = "Scor matematic") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+data %>%
+  ggplot(aes(x = `math score`, y = `reading score`, color = `writing score`)) +
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red") +
+  labs(x = "Scor matematic", y = "Scor citire", color = "Scor scriere") +
+  theme_minimal()
+
+data %>%
+  ggplot(aes(x = `math score`, y = `reading score`)) +
+  geom_point() +
+  labs(x = "Scor Matematic", y = "Scor la Testele de Citire") +
+  theme_minimal()
+
+data %>%
+  ggplot(aes(x = `test preparation course`, y = `writing score`, fill = `test preparation course`)) +
+  geom_boxplot() +
+  labs(x = "Curs Pregătitor", y = "Scor la Testele de Scriere") +
+  theme_minimal()
+
+
+
+install.packages("gridExtra")
+library(gridExtra)
+
+# Plot 1
+plot1 <- ggplot(data, aes(x = gender, y = `math score`)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(x = "Gender", y = "Mean Math Score")
+
+# Plot 2
+plot2 <- data %>%
+  group_by(`race/ethnicity`, `test preparation course`) %>%
+  summarize(mean_math_score = mean(`math score`), mean_reading_score = mean(`reading score`)) %>%
+  ggplot(aes(x = `race/ethnicity`, y = mean_math_score, fill = `test preparation course`)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Ethnicity", y = "Mean Math Score") +
+  theme_minimal()
+
+# Plot 3
+plot3 <- data %>%
+  ggplot(aes(x = `parental level of education`, y = `math score`)) +
+  geom_boxplot() +
+  labs(x = "Parental Education Level", y = "Math Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Plot 4 (modified)
+plot4 <- data %>%
+  ggplot(aes(x = `test preparation course`, y = `writing score`, fill = `test preparation course`)) +
+  geom_boxplot() +
+  labs(x = "Test Preparation Course", y = "Writing Score") +
+  scale_fill_brewer(palette = "Set1")
+
+# Plot 5 (modified)
+plot5 <- data %>%
+  ggplot(aes(x = `parental level of education`, y = `writing score`, fill = `race/ethnicity`)) +
+  geom_boxplot() +
+  labs(x = "Parental Education Level", y = "Writing Score") +
+  scale_fill_brewer(palette = "Paired") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Plot 6 (modified)
+plot6 <- data %>%
+  ggplot(aes(x = `gender`, y = `reading score`, fill = `race/ethnicity`)) +
+  geom_boxplot() +
+  labs(x = "Gender", y = "Reading Score") +
+  scale_fill_brewer(palette = "Set2")
+# Combine all plots into a single grid
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, ncol = 2)
+# Ajustați modelul de regresie liniară
+model <- lm(`writing score` ~ `math score` + `reading score`, data = data)
+
+# Vizualizare rezultate
+summary(model)
+# Graficul de dispersie cu linia de regresie
+ggplot(data, aes(x = `math score`, y = `writing score`)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(x = "Math Score", y = "Writing Score") +
+  theme_minimal()
+
+# Ajustarea modelului de regresie logistică
+logistic_model <- glm(`test preparation course` == "completed" ~ `math score` + `reading score` + `writing score`, 
+                      data = data, 
+                      family = binomial)
+
+# Sumarul modelului
+summary(logistic_model)
+
+# Calculul matricei de corelație
+correlation_matrix <- cor(data[, c("math score", "reading score", "writing score")])
+
+# Vizualizarea matricei de corelație
+correlation_matrix
+
+# Ajustarea unui model de regresie liniară
+linear_model <- lm(`writing score` ~ `math score` + `reading score`, data = data)
+
+# Sumarul modelului
+summary(linear_model)
+
+# Histograma pentru scorurile la testul de matematică
+hist(data$`math score`, main = "Distribuția Scorurilor la Testul de Matematică", xlab = "Scor la Matematică")
+
+# Pachetul 'corrplot' este necesar pentru acest pas
+install.packages("corrplot")
+
+# Assuming you have the corrplot package loaded
+library(corrplot)
+
+# Plot the correlation matrix
+corrplot(correlation_matrix, method = "circle")
+
+# Harta de căldură pentru matricea de corelație
+corrplot(cor(data[, c("math score", "reading score", "writing score")]), method = "color")
+
+# Pachetul 'psych' este necesar pentru acest pas
+install.packages("psych")
+library(psych)
+
+# Analiza factorială
+fa.parallel(data[, c("math score", "reading score", "writing score")])
+
+
+data <- data.frame(
+  gender = c("female", "female", "female", "male", "male", "female"),
+  race_ethnicity = c("group B", "group C", "group B", "group A", "group C", "group A"),
+  parental_education = c("bachelor's degree", "some college", "master's degree", "high school", "some college", "some high school"),
+  lunch = c("standard", "standard", "standard", "free/reduced", "standard", "standard"),
+  test_preparation = c("none", "completed", "none", "none", "none", "completed"),
+  math_score = c(72, 69, 90, 47, 76, 71),
+  reading_score = c(72, 90, 95, 57, 78, 83),
+  writing_score = c(74, 88, 93, 44, 75, 78),
+  grade = factor(c("Good", "Good", "Good", "Bad", "Good", "Good"), levels = c("Good", "Bad"))
+)
+
+# Calculează procentajele pentru fiecare grupă în funcție de scorurile la matematică
+percentages <- data %>%
+  group_by(race_ethnicity) %>%
+  summarize(percentage = sum(math_score > 55) / n() * 100)
+
+# Creează un grafic sub formă de tort pentru procentajele calculate
+ggplot(percentages, aes(x = "", y = percentage, fill = race_ethnicity)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(aes(label = sprintf("%.1f%%", percentage)), position = position_fill(vjust = 0.5)) +
+  coord_polar(theta = "y") +
+  labs(title = "Procentajul elevilor care au trecut examenul la matematică",
+       fill = "Grupa etnică") +
+  theme_minimal()
+
+
+
+# Summary of the logistic regression model
+summary(logistic_model)
+
+
+
+
+# Perform logistic regression
+logistic_model <- glm(grade ~ math_score + reading_score + writing_score, data = data, family = "binomial")
+
+# Summary of the logistic regression model
+summary(logistic_model)
+library(ggplot2)
+
+# Trasare scatter plot
+ggplot(data, aes(x = math_score, y = as.numeric(grade))) +
+  geom_point() +
+  # Adăugare linie de regresie logistică
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE) +
+  labs(title = "Regresie Logistică",
+       x = "Math Score",
+       y = "Probabilitate Good Grade")
+library(dplyr)
+
+# Afișarea datelor pentru a le inspecta
+head(data)
+
+# Creați o variabilă y cu cel mai mare scor dintre cele trei
+data$y <- apply(data[, c("math_score", "writing_score", "reading_score")], 1, max)
+
+# Creați o variabilă x cu celelalte două scoruri
+data$x <- apply(data[, c("math_score", "writing_score", "reading_score")], 1, function(scores) sum(scores) - max(scores))
+
+# Afișați primele rânduri ale datelor pentru a verifica adăugarea noilor variabile
+head(data)
+
+# Ajustați un model de regresie liniar
+model <- lm(y ~ x, data = data)
+
+# Afișați rezumatul modelului
+summary(model)
+
+# Trasează datele
+plot(data$x, data$y, main = "Regresie Liniară", xlab = "x", ylab = "y")
+
+# Adaugă linia de regresie
+lines(data$x, predict(model), col = "red")
+
+# Vizualizare diagrame de reziduuri
+par(mfrow = c(2, 2))
+plot(model, cex = 1.8, cex.main = 1.8)
+
+
+# Histograma reziduurilor
+hist(residuals(model), main = "Histograma Reziduurilor", xlab = "Reziduuri", cex.main = 1.9)
+
+# Comparare între valorile prezise și cele observate
+plot(data$y, predict(model), main = "Predictii vs. Observate", xlab = "Observate", ylab = "Predictii", cex = 1.5, cex.main = 1.8)
+abline(0, 1, col = "red")
+
+
+# Vector cu valorile existente pentru x
+x_values <- data$x
+
+# Calcularea intervalului de încredere pentru predicțiile actuale
+predict_interval_existing <- predict(model, interval = "confidence", level = 0.95)
+
+# Afișarea intervalului de încredere pentru valorile existente ale lui x
+print(predict_interval_existing)
+
+# Setarea dimensiunii plotului
+par(mar = c(5, 5, 4, 2) + 0.1)  # Mărește marginea din stânga pentru a face loc etichetelor
+
+# Afișarea graficului cu intervalul de încredere pentru valorile existente ale lui x
+plot(data$x, data$y, main = "Regresie Liniară", xlab = "x", ylab = "y", cex = 1.5, cex.main = 1.8)
+lines(data$x, predict(model), col = "red")
+lines(data$x, predict_interval_existing[, "fit"], col = "blue", lty = 2)
+lines(data$x, predict_interval_existing[, "lwr"], col = "green", lty = 3)
+lines(data$x, predict_interval_existing[, "upr"], col = "green", lty = 3)
+
+# Resetarea dimensiunii plotului la valoarea implicită
+par(mar = c(5, 4, 4, 2) + 0.1)  # Restaurează marginea implicită
+
+# Calculați reziduurile standardizate
+standardized_residuals <- rstandard(model)
+
+# Afișați primele câteva reziduuri standardizate
+head(standardized_residuals)
+
+# Afișați un grafic al reziduurilor standardizate
+plot(standardized_residuals, pch = 16, main = "Grafic al Residuurilor Standardizate", ylab = "Residuuri Standardizate")
+
+# Adăugați o linie orizontală la 0 pentru referință
+abline(h = 0, col = "red", lty = 2)
+
+# Calculate standardized residuals
+standardized_residuals <- rstandard(model)
+
+# Calculate square root of fitted values
+sqrt_fitted_values <- sqrt(fitted(model))
+
+# Create Scale-Location plot
+plot(sqrt_fitted_values, abs(standardized_residuals), pch = 16,
+     main = "Scale-Location Plot",
+     xlab = "Square Root of Fitted Values",
+     ylab = "Absolute Standardized Residuals")
+
+# Add a smoother or trend line
+smooth_line <- smooth.spline(sqrt_fitted_values, abs(standardized_residuals))
+lines(smooth_line, col = "red", lty = 2)
+
+# Add labels and reference lines
+abline(h = 0, col = "red", lty = 1)  # Reference line at 0
+
+# Calcularea intervalului de previziune
+predict_interval <- predict(model, newdata = data, interval = "prediction", level = 0.95)
+# Testarea normalității reziduurilor
+shapiro.test(residuals(model))
+
+# Testul Breusch-Pagan pentru homoscedasticitate
+install.packages("lmtest")
+library(lmtest)
+bptest(model)
+
+# Calcularea factorului de inflație a varianței (VIF)
+install.packages("car")
+library(car)
+vif(model)
+
+# Diagramă de dispersie pentru variabilele x și y
+plot(data$x, data$y, main = "Diagrama de Dispersie", xlab = "x", ylab = "y", col = "blue", pch = 16)
+abline(a = coef(model)[1], b = coef(model)[2], col = "red", lwd = 2)
+
+# Histograme pentru x și y
+par(mfrow = c(1, 2))
+hist(data$x, main = "Histograma lui x", xlab = "x", col = "green", border = "black")
+hist(data$y, main = "Histograma lui y", xlab = "y", col = "orange", border = "black")
+
+# Diagramă de bare pentru frecvența categoriilor din x
+if (is.factor(data$x)) {
+  barplot(table(data$x), main = "Diagrama de Bare pentru x", col = "purple", ylab = "Frecvență")
+}
+
+# Diagramă Q-Q pentru reziduuri
+qqnorm(residuals(model))
+qqline(residuals(model), col = 2)
+
+# Diagramă de dispersie cu linie de regresie pentru x și y
+library(ggplot2)
+ggplot(data, aes(x = x, y = y)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Diagrama de Dispersie cu Linie de Regresie", x = "x", y = "y")
+
+
+# Afișare diagrame pentru variabila y (y vs. x)
+plot(data$x, data$y, main = "Scatter Plot: y vs. x", xlab = "x", ylab = "y", pch = 16, col = "blue")
+
+
+# Afișare diagramă în tort pentru variabila y
+pie(table(data$grade), main = "Diagramă în Tort pentru variabila y", col = rainbow(length(unique(data$grade))))
+
+# Afișare diagramă în tort pentru variabila x (puteți ajusta în funcție de datele reale)
+# De exemplu, puteți crea intervale pentru a face o diagramă în tort a scorurilor
+breaks <- c(0, 50, 75, 100)
+labels <- c("0-50", "51-75", "76-100")
+pie(table(cut(data$x, breaks, labels = labels)), main = "Diagramă în Tort pentru variabila x", col = rainbow(length(breaks)))
+
+
+
+# Utilizează funcția step() pentru forward selection
+forward_model <- lm(y ~ 1, data = data)  # Model cu intercept
+forward_model <- step(forward_model, direction = "forward", scope = ~ x)
+summary(forward_model)
+# Utilizează funcția step() pentru backward elimination
+full_model <- lm(y ~ x, data = data)
+backward_model <- step(full_model, direction = "backward")
+summary(backward_model)
+
+# Instalează și încarcă pachetul glmnet (dacă nu este deja instalat)
+# install.packages("glmnet")
+
+install.packages("glmnet")
+library(glmnet)
+x_matrix <- model.matrix(y ~ ., data = data)[, -1]
+lasso_model <- cv.glmnet(x_matrix, data$y, alpha = 1)
+lasso_model <- glmnet(x_matrix, data$y, alpha = 1)
+plot(lasso_model)
+
